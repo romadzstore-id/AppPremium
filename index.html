@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Public Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/5968/5968282.png">
+<style>
+:root {
+  --bg: #020617;
+  --card: rgba(15, 23, 42, 0.85);
+  --border: rgba(148, 163, 184, 0.25);
+  --glow: #6366f1;
+  --accent: #7c3aed;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --gradient: linear-gradient(135deg, #6366f1, #7c3aed, #8b5cf6);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  min-height: 100vh;
+  background: 
+    radial-gradient(1200px 600px at 5% -5%, rgba(99, 102, 241, 0.3), transparent 70%),
+    radial-gradient(1000px 500px at 95% 15%, rgba(124, 58, 237, 0.25), transparent 70%),
+    radial-gradient(800px 400px at 50% 85%, rgba(139, 92, 246, 0.2), transparent 70%),
+    linear-gradient(180deg, #020617 0%, #0f172a 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Grid pattern background */
+.grid-pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: -2;
+  opacity: 0.3;
+}
+
+/* Animated particles */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(99, 102, 241, 0.2);
+  border-radius: 50%;
+  animation: floatParticle 20s infinite linear;
+}
+
+@keyframes floatParticle {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.5; }
+  90% { opacity: 0.5; }
+  100% { transform: translate(100vw, -100vh) rotate(360deg); opacity: 0; }
+}
+
+/* Header */
+.header {
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: rgba(2, 6, 23, 0.85);
+  backdrop-filter: blur(15px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+}
+
+.logo-text {
+  font-weight: 700;
+  font-size: 1.5rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.clock-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: rgba(15, 23, 42, 0.7);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.clock {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--success);
+  position: relative;
+}
+
+.status-dot::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  border: 1px solid var(--success);
+  animation: ripple 2s infinite;
+}
+
+@keyframes ripple {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+/* Container & Card */
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: calc(100vh - 74px);
+}
+
+.card {
+  width: 100%;
+  max-width: 500px;
+  background: var(--card);
+  backdrop-filter: blur(25px);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 32px;
+  box-shadow: 
+    0 40px 100px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(99, 102, 241, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: fadeUp 0.8s ease-out;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--glow), transparent);
+  z-index: 2;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* User info */
+.user-info {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 28px;
+  align-items: center;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--gradient);
+  box-shadow: 0 0 35px rgba(99, 102, 241, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  position: relative;
+}
+
+.avatar::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: linear-gradient(45deg, var(--glow), var(--accent)) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.username {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+.servername {
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badge {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(124, 58, 237, 0.2));
+  color: #c7d2fe;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+/* Input fields */
+.input-group {
+  margin-bottom: 22px;
+  position: relative;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.3px;
+}
+
+.input-icon {
+  color: var(--glow);
+  font-size: 15px;
+  width: 20px;
+  text-align: center;
+}
+
+.input-container {
+  position: relative;
+}
+
+input {
+  width: 100%;
+  padding: 17px 20px;
+  padding-left: 48px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(2, 6, 23, 0.85);
+  color: var(--text-primary);
+  outline: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-container i:first-child {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--glow);
+  font-size: 16px;
+  z-index: 1;
+}
+
+input:focus {
+  border-color: var(--glow);
+  box-shadow: 
+    0 0 0 3px rgba(99, 102, 241, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.3);
+  background: rgba(2, 6, 23, 0.95);
+  transform: translateY(-1px);
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+  margin-bottom: 22px;
+}
+
+.dropdown-btn {
+  padding: 17px 20px;
+  padding-left: 48px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(2, 6, 23, 0.85);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  position: relative;
+}
+
+.dropdown-btn::before {
+  content: '\f013';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  left: 18px;
+  color: var(--glow);
+  font-size: 16px;
+}
+
+.dropdown-btn:hover {
+  border-color: var(--glow);
+  background: rgba(2, 6, 23, 0.95);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-btn i:last-child {
+  transition: transform 0.3s ease;
+}
+
+.dropdown-btn.active i:last-child {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: 8px;
+  background: rgba(2, 6, 23, 0.98);
+  backdrop-filter: blur(25px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 10;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+.dropdown-menu.open {
+  max-height: 450px;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  overflow-y: auto;
+}
+
+.dropdown-menu div {
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+}
+
+.dropdown-menu div:last-child {
+  border-bottom: none;
+}
+
+.dropdown-menu div:hover {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(124, 58, 237, 0.25));
+}
+
+.dropdown-menu i {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.unli {
+  font-weight: 700;
+  color: #d8b4fe;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(124, 58, 237, 0.15));
+  border-left: 3px solid var(--glow);
+}
+
+/* Button */
+.create-btn {
+  width: 100%;
+  padding: 19px;
+  border: none;
+  border-radius: 18px;
+  background: var(--gradient);
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 28px;
+  cursor: pointer;
+  box-shadow: 0 15px 45px rgba(99, 102, 241, 0.5);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.create-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: 0.5s;
+  z-index: -1;
+}
+
+.create-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 25px 60px rgba(124, 58, 237, 0.6);
+}
+
+.create-btn:hover::before {
+  left: 100%;
+}
+
+.create-btn:active {
+  transform: translateY(0);
+}
+
+.create-btn.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 24px 0 0;
+  margin-top: 32px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 12px;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: var(--glow);
+}
+
+/* Popup */
+#popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.98);
+  backdrop-filter: blur(35px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.popup-card {
+  width: 100%;
+  max-width: 460px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 32px;
+  box-shadow: 0 50px 120px rgba(0, 0, 0, 0.8);
+  animation: scaleUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.popup-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient);
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.popup-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: var(--success);
+  border: 2px solid var(--success);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+}
+
+.popup-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.popup-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.details-container {
+  background: rgba(2, 6, 23, 0.7);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.detail:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.detail:first-child {
+  padding-top: 0;
+}
+
+.detail-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-value {
+  font-weight: 700;
+  color: var(--glow);
+  font-size: 15px;
+  letter-spacing: 0.5px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn {
+  flex: 1;
+  padding: 16px;
+  border-radius: 16px;
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-primary {
+  background: var(--gradient);
+  color: white;
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+}
+
+.btn-secondary {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: rgba(99, 102, 241, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Floating WhatsApp button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: white;
+  box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4);
+  z-index: 100;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  animation: pulseWhatsapp 3s infinite;
+}
+
+@keyframes pulseWhatsapp {
+  0%, 100% { transform: scale(1); box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4); }
+  50% { transform: scale(1.05); box-shadow: 0 20px 45px rgba(37, 211, 102, 0.6); }
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 20px 50px rgba(37, 211, 102, 0.7);
+  animation: none;
+}
+
+.whatsapp-tooltip {
+  position: absolute;
+  right: 75px;
+  background: rgba(2, 6, 23, 0.95);
+  border: 1px solid var(--border);
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-left: 3px solid #25D366;
+}
+
+.whatsapp-float:hover .whatsapp-tooltip {
+  opacity: 1;
+  visibility: visible;
+  right: 80px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .card {
+    padding: 24px;
+    border-radius: 24px;
+  }
+  
+  .header {
+    padding: 16px 20px;
+  }
+  
+  .logo-text {
+    font-size: 1.3rem;
+  }
+  
+  .clock-container {
+    padding: 6px 12px;
+  }
+  
+  .whatsapp-float {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .whatsapp-tooltip {
+    display: none;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Background Elements -->
+<div class="grid-pattern"></div>
+<div class="particles" id="particlesContainer"></div>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">
+      <i class="fas fa-server"></i>
+    </div>
+    <div class="logo-text">Public Panel</div>
+  </div>
+  
+  <div class="header-controls">
+    <div class="status">
+      <div class="status-dot"></div>
+      <span>Online</span>
+    </div>
+    <div class="clock-container">
+      <div class="clock" id="clock"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+  <div class="card">
+    <div class="user-info">
+      <div class="avatar">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      <div class="user-details">
+        <div class="username" id="usernameText">Administrator</div>
+        <div class="servername">
+          <span>Secure Server Management</span>
+          <span class="badge">PROTECTED</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="panelUser"><i class="fas fa-user input-icon"></i> Username Panel</label>
+      <div class="input-container">
+        <i class="fas fa-user"></i>
+        <input id="panelUser" placeholder="Masukkan username panel" maxlength="20" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="panelServer"><i class="fas fa-server input-icon"></i> Nama Server</label>
+      <div class="input-container">
+        <i class="fas fa-server"></i>
+        <input id="panelServer" placeholder="Masukkan nama server" maxlength="30" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <label><i class="fas fa-memory input-icon"></i> Alokasi RAM</label>
+      <div class="dropdown-btn" onclick="toggleDropdown('ramMenu', this)">
+        <span id="ramVal">1 GB</span>
+        <span><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="dropdown-menu" id="ramMenu">
+        <div onclick="setRam('1')">1 GB <i class="fas fa-memory"></i></div>
+        <div onclick="setRam('2')">2 GB <i class="fas fa-memory"></i></div>
+        <div onclick="setRam('3')">3 GB <i class="fas fa-memory"></i></div>
+        <div onclick="setRam('4')">4 GB <i class="fas fa-memory"></i></div>
+        <div onclick="setRam('5')">5 GB <i class="fas fa-memory"></i></div>
+        <div onclick="setRam('6')">6 GB <i class="fas fa-memory"></i></div>
+        <div onclick="setRam('7')">7 GB <i class="fas fa-memory"></i></div>
+        <div onclick="setRam('8')">8 GB <i class="fas fa-memory"></i></div>
+        <div onclick="setRam('9')">9 GB <i class="fas fa-memory"></i></div>
+        <div class="unli" onclick="setRam('UNLIMITED')">UNLIMITED <i class="fas fa-infinity"></i></div>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <label><i class="fas fa-egg input-icon"></i> Tipe Server (Egg)</label>
+      <div class="dropdown-btn" onclick="toggleDropdown('eggMenu', this)">
+        <span id="eggVal">Bot WhatsApp</span>
+        <span><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="dropdown-menu" id="eggMenu">
+        <div onclick="setEgg('Bot WhatsApp')">Bot WhatsApp <i class="fab fa-whatsapp"></i></div>
+        <div onclick="setEgg('Minecraft')">Minecraft <i class="fas fa-cube"></i></div>
+        <div onclick="setEgg('Source Engine')">Source Engine <i class="fas fa-gamepad"></i></div>
+        <div onclick="setEgg('Voice Server')">Voice Server <i class="fas fa-microphone"></i></div>
+        <div onclick="setEgg('Rust')">Rust <i class="fas fa-code"></i></div>
+        <div onclick="setEgg('Node.js')">Node.js <i class="fab fa-node-js"></i></div>
+        <div onclick="setEgg('PHP')">PHP <i class="fab fa-php"></i></div>
+      </div>
+    </div>
+
+    <button class="create-btn" onclick="createPanel()">
+      <i class="fas fa-plus-circle"></i> BUAT PANEL SERVER
+    </button>
+    
+    <div class="footer">
+      <div class="footer-links">
+        <a href="#" onclick="showHelp()">Bantuan</a>
+        <a href="#" onclick="showTerms()">Ketentuan</a>
+        <a href="#" onclick="showPrivacy()">Privasi</a>
+      </div>
+      <p>© 2023 Secure Panel System. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Popup Success -->
+<div id="popup">
+  <div class="popup-card">
+    <div class="popup-header">
+      <div class="success-icon">
+        <i class="fas fa-check"></i>
+      </div>
+      <h3 class="popup-title">Panel Berhasil Dibuat</h3>
+      <p class="popup-subtitle">Data panel Anda telah berhasil dibuat dan disimpan dengan aman</p>
+    </div>
+    
+    <div class="details-container">
+      <div class="detail">
+        <span class="detail-label"><i class="fas fa-server"></i> Server</span>
+        <span class="detail-value" id="pServer"></span>
+      </div>
+      <div class="detail">
+        <span class="detail-label"><i class="fas fa-user"></i> Username</span>
+        <span class="detail-value" id="pUser"></span>
+      </div>
+      <div class="detail">
+        <span class="detail-label"><i class="fas fa-key"></i> Password</span>
+        <span class="detail-value" id="pPass"></span>
+      </div>
+    </div>
+    
+    <div class="action-buttons">
+      <button class="btn btn-secondary" onclick="copyAll()">
+        <i class="fas fa-copy"></i> Salin Data
+      </button>
+      <button class="btn btn-primary" onclick="redirectToLogin()">
+        <i class="fas fa-sign-in-alt"></i> Login ke Panel
+      </button>
+    </div>
+    
+    <p style="margin-top: 20px; font-size: 12px; color: var(--text-secondary); text-align: center;">
+      <i class="fas fa-shield-alt"></i> Data Anda terlindungi dengan enkripsi tingkat tinggi
+    </p>
+  </div>
+</div>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/6283171889474" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+  <i class="fab fa-whatsapp"></i>
+  <div class="whatsapp-tooltip">Butuh bantuan? Hubungi kami</div>
+</a>
+
+<script>
+// ==================== SECURITY ENHANCEMENTS ====================
+// Menyembunyikan semua URL panel asli untuk mencegah DDoS
+
+// Simulasi database lokal untuk menyimpan data panel
+const localPanelDatabase = {
+  users: {},
+  panels: {}
+};
+
+// Enkripsi sederhana untuk data sensitif
+function simpleEncrypt(text) {
+  // Base64 encoding untuk menyembunyikan data
+  return btoa(encodeURIComponent(text));
+}
+
+function simpleDecrypt(encrypted) {
+  try {
+    return decodeURIComponent(atob(encrypted));
+  } catch (e) {
+    return encrypted;
+  }
+}
+
+// Redirect ke login page lokal (tidak menampilkan domain asli)
+function redirectToLogin() {
+  // Simpan data login di localStorage
+  const loginData = {
+    username: document.getElementById('pUser').textContent,
+    password: document.getElementById('pPass').textContent,
+    timestamp: new Date().getTime()
+  };
+  
+  localStorage.setItem('panel_login_data', JSON.stringify(loginData));
+  localStorage.setItem('panel_auth_token', generateToken());
+  
+  // Buka login.html (file lokal)
+  window.open('login.html', '_blank');
+  
+  // Tutup popup
+  document.getElementById('popup').style.display = 'none';
+}
+
+// Generate token autentikasi
+function generateToken() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let token = '';
+  for (let i = 0; i < 32; i++) {
+    token += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return token;
+}
+
+// ==================== INISIALISASI ====================
+// Authentication check
+if (localStorage.getItem('login') !== 'true') {
+  // Redirect ke login page lokal
+  window.location.href = 'login.html';
+}
+
+// Inisialisasi variabel
+let ram = '1';
+let egg = 'Bot WhatsApp';
+
+// Buat partikel background
+function createParticles() {
+  const container = document.getElementById('particlesContainer');
+  const particleCount = 15;
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    
+    // Random size dan position
+    const size = Math.random() * 4 + 1;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.top = `${Math.random() * 100}%`;
+    
+    // Random animation delay
+    particle.style.animationDelay = `${Math.random() * 20}s`;
+    
+    container.appendChild(particle);
+  }
+}
+
+// Toggle dropdown dengan animasi
+function toggleDropdown(menuId, button) {
+  const menu = document.getElementById(menuId);
+  const isOpen = menu.classList.contains('open');
+  
+  // Tutup semua dropdown lainnya
+  document.querySelectorAll('.dropdown-menu').forEach(m => {
+    if (m.id !== menuId) {
+      m.classList.remove('open');
+      const otherBtn = m.parentElement.querySelector('.dropdown-btn');
+      if (otherBtn) otherBtn.classList.remove('active');
+    }
+  });
+  
+  // Toggle dropdown saat ini
+  menu.classList.toggle('open');
+  button.classList.toggle('active');
+}
+
+// Set RAM value
+function setRam(value) {
+  ram = value;
+  document.getElementById('ramVal').textContent = value === 'UNLIMITED' ? 'UNLIMITED' : `${value} GB`;
+  document.getElementById('ramMenu').classList.remove('open');
+  document.querySelector('#ramMenu').parentElement.querySelector('.dropdown-btn').classList.remove('active');
+}
+
+// Set Egg value
+function setEgg(value) {
+  egg = value;
+  document.getElementById('eggVal').textContent = value;
+  document.getElementById('eggMenu').classList.remove('open');
+  document.querySelector('#eggMenu').parentElement.querySelector('.dropdown-btn').classList.remove('active');
+}
+
+// Generate random password yang kuat
+function generatePassword(length = 24) {
+  const uppercase = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+  const lowercase = 'abcdefghijkmnopqrstuvwxyz';
+  const numbers = '23456789';
+  const symbols = '!@#$%^&*';
+  
+  let password = '';
+  
+  // Pastikan minimal satu dari setiap karakter type
+  password += uppercase[Math.floor(Math.random() * uppercase.length)];
+  password += lowercase[Math.floor(Math.random() * lowercase.length)];
+  password += numbers[Math.floor(Math.random() * numbers.length)];
+  password += symbols[Math.floor(Math.random() * symbols.length)];
+  
+  // Isi sisa password
+  const allChars = uppercase + lowercase + numbers + symbols;
+  for (let i = password.length; i < length; i++) {
+    password += allChars[Math.floor(Math.random() * allChars.length)];
+  }
+  
+  // Acak urutan password
+  return password.split('').sort(() => Math.random() - 0.5).join('');
+}
+
+// Fungsi utama untuk membuat panel
+async function createPanel() {
+  const username = document.getElementById('panelUser').value.trim();
+  const server = document.getElementById('panelServer').value.trim();
+  
+  // Validasi input
+  if (!username || !server) {
+    showNotification('Username dan Nama Server wajib diisi!', 'error');
+    return;
+  }
+  
+  if (username.length < 3 || username.length > 20) {
+    showNotification('Username harus 3-20 karakter!', 'error');
+    return;
+  }
+  
+  if (server.length < 3 || server.length > 30) {
+    showNotification('Nama server harus 3-30 karakter!', 'error');
+    return;
+  }
+  
+  // Generate password
+  const password = generatePassword();
+  
+  // Simulasi API call (dalam implementasi real, ini akan memanggil backend)
+  try {
+    // Show loading state
+    const btn = document.querySelector('.create-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MEMBUAT PANEL...';
+    btn.classList.add('loading');
+    
+    // Simulasi delay jaringan
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Simpan data panel secara lokal (simulasi database)
+    const panelId = 'panel_' + Date.now();
+    const encryptedPassword = simpleEncrypt(password);
+    
+    localPanelDatabase.panels[panelId] = {
+      id: panelId,
+      username: username,
+      server: server,
+      ram: ram,
+      egg: egg,
+      password: encryptedPassword,
+      created: new Date().toISOString(),
+      status: 'active'
+    };
+    
+    // Tampilkan data di popup
+    document.getElementById('pServer').textContent = server;
+    document.getElementById('pUser').textContent = username;
+    document.getElementById('pPass').textContent = password;
+    
+    // Tampilkan popup sukses
+    document.getElementById('popup').style.display = 'flex';
+    
+    // Reset form
+    document.getElementById('panelUser').value = '';
+    document.getElementById('panelServer').value = '';
+    setRam('1');
+    setEgg('Bot WhatsApp');
+    
+    // Reset button
+    btn.innerHTML = originalText;
+    btn.classList.remove('loading');
+    
+    // Log aktivitas (hanya di console untuk debugging)
+    console.log(`Panel created: ${username}@${server}`);
+    
+  } catch (error) {
+    showNotification('Terjadi kesalahan saat membuat panel. Silakan coba lagi.', 'error');
+    console.error('Create panel error:', error);
+    
+    // Reset button pada error
+    const btn = document.querySelector('.create-btn');
+    btn.innerHTML = '<i class="fas fa-plus-circle"></i> BUAT PANEL SERVER';
+    btn.classList.remove('loading');
+  }
+}
+
+// Salin semua data ke clipboard
+function copyAll() {
+  const server = document.getElementById('pServer').textContent;
+  const user = document.getElementById('pUser').textContent;
+  const pass = document.getElementById('pPass').textContent;
+  
+  const text = `SERVER PANEL\n===============\nServer: ${server}\nUsername: ${user}\nPassword: ${pass}\n\nSalin data ini untuk login ke panel.`;
+  
+  navigator.clipboard.writeText(text).then(() => {
+    // Show success feedback
+    const copyBtn = document.querySelector('.btn-secondary');
+    const originalText = copyBtn.innerHTML;
+    copyBtn.innerHTML = '<i class="fas fa-check"></i> Data Disalin!';
+    copyBtn.style.background = 'rgba(16, 185, 129, 0.2)';
+    copyBtn.style.borderColor = '#10b981';
+    copyBtn.style.color = '#10b981';
+    
+    setTimeout(() => {
+      copyBtn.innerHTML = originalText;
+      copyBtn.style.background = '';
+      copyBtn.style.borderColor = '';
+      copyBtn.style.color = '';
+    }, 2000);
+  }).catch(err => {
+    console.error('Copy failed:', err);
+    showNotification('Gagal menyalin data', 'error');
+  });
+}
+
+// Fungsi notifikasi
+function showNotification(message, type = 'info') {
+  // Hapus notifikasi lama jika ada
+  const oldNotification = document.querySelector('.notification');
+  if (oldNotification) oldNotification.remove();
+  
+  // Buat elemen notifikasi
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.innerHTML = `
+    <div style="
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      background: ${type === 'error' ? 'rgba(239, 68, 68, 0.9)' : 'rgba(15, 23, 42, 0.95)'};
+      border: 1px solid ${type === 'error' ? '#ef4444' : 'var(--border)'};
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: slideIn 0.3s ease;
+    ">
+      <i class="fas ${type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+      <span>${message}</span>
+    </div>
+  `;
+  
+  document.body.appendChild(notification);
+  
+  // Hapus notifikasi setelah 3 detik
+  setTimeout(() => {
+    notification.style.animation = 'slideOut 0.3s ease';
+    setTimeout(() => notification.remove(), 300);
+  }, 3000);
+}
+
+// Deteksi timezone
+function getTimeZone() {
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  if (timeZone.includes('Makassar')) return 'WITA';
+  if (timeZone.includes('Jayapura')) return 'WIT';
+  return 'WIB';
+}
+
+// Update jam
+function updateClock() {
+  const now = new Date();
+  const timeString = now.toLocaleTimeString('id-ID', { 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit',
+    hour12: false 
+  });
+  
+  document.getElementById('clock').textContent = `${timeString} ${getTimeZone()}`;
+}
+
+// Tutup dropdown ketika klik di luar
+document.addEventListener('click', function(event) {
+  const dropdowns = document.querySelectorAll('.dropdown-menu');
+  const buttons = document.querySelectorAll('.dropdown-btn');
+  
+  let isClickInside = false;
+  
+  dropdowns.forEach(menu => {
+    if (menu.contains(event.target)) isClickInside = true;
+  });
+  
+  buttons.forEach(btn => {
+    if (btn.contains(event.target)) isClickInside = true;
+  });
+  
+  if (!isClickInside) {
+    dropdowns.forEach(menu => {
+      menu.classList.remove('open');
+    });
+    buttons.forEach(btn => {
+      btn.classList.remove('active');
+    });
+  }
+});
+
+// Tutup popup ketika klik di luar
+document.getElementById('popup').addEventListener('click', function(event) {
+  if (event.target === this) {
+    this.style.display = 'none';
+  }
+});
+
+// Validasi input username
+document.getElementById('panelUser').addEventListener('input', function() {
+  this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '');
+});
+
+// Fungsi bantuan
+function showHelp() {
+  showNotification('Hubungi WhatsApp untuk bantuan: 0831-7188-9474', 'info');
+}
+
+function showTerms() {
+  showNotification('Lihat ketentuan penggunaan di halaman login', 'info');
+}
+
+function showPrivacy() {
+  showNotification('Kebijakan privasi tersedia di dashboard admin', 'info');
+}
+
+// Inisialisasi
+createParticles();
+updateClock();
+setInterval(updateClock, 1000);
+
+// CSS untuk animasi notifikasi
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+  }
+`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>

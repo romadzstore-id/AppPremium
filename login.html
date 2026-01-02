@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg: #020617;
+  --card: rgba(15, 23, 42, 0.85);
+  --border: rgba(148, 163, 184, 0.25);
+  --glow: #6366f1;
+  --accent: #7c3aed;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  min-height: 100vh;
+  background: 
+    radial-gradient(1200px 600px at 5% -5%, rgba(99, 102, 241, 0.3), transparent 70%),
+    radial-gradient(1000px 500px at 95% 15%, rgba(124, 58, 237, 0.25), transparent 70%),
+    linear-gradient(180deg, #020617 0%, #0f172a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.login-card {
+  background: var(--card);
+  backdrop-filter: blur(25px);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 40px 32px;
+  box-shadow: 
+    0 40px 100px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(99, 102, 241, 0.15);
+  text-align: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.logo-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6366f1, #7c3aed, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+}
+
+.logo-text {
+  font-weight: 700;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #6366f1, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.login-subtitle {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+}
+
+.input-container {
+  position: relative;
+}
+
+.input-container i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--glow);
+}
+
+input {
+  width: 100%;
+  padding: 16px 16px 16px 48px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(2, 6, 23, 0.8);
+  color: var(--text-primary);
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  border-color: var(--glow);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.login-btn {
+  width: 100%;
+  padding: 17px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #6366f1, #7c3aed);
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 24px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.back-link:hover {
+  color: var(--glow);
+}
+
+.message {
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  display: none;
+}
+
+.message.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  display: block;
+}
+
+.message.success {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+  display: block;
+}
+</style>
+</head>
+<body>
+<div class="login-container">
+  <div class="login-card">
+    <div class="logo">
+      <div class="logo-icon">
+        <i class="fas fa-server"></i>
+      </div>
+      <div class="logo-text">Panel Login</div>
+    </div>
+    
+    <h2 class="login-title">Masuk ke Panel</h2>
+    <p class="login-subtitle">Gunakan kredensial yang diberikan saat membuat panel</p>
+    
+    <div id="message" class="message"></div>
+    
+    <div class="input-group">
+      <label for="username">Username</label>
+      <div class="input-container">
+        <i class="fas fa-user"></i>
+        <input type="text" id="username" placeholder="Masukkan username">
+      </div>
+    </div>
+    
+    <div class="input-group">
+      <label for="password">Password</label>
+      <div class="input-container">
+        <i class="fas fa-key"></i>
+        <input type="password" id="password" placeholder="Masukkan password">
+      </div>
+    </div>
+    
+    <button class="login-btn" onclick="processLogin()">
+      <i class="fas fa-sign-in-alt"></i> LOGIN KE PANEL
+    </button>
+    
+    <a href="index.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> Kembali ke halaman utama
+    </a>
+  </div>
+</div>
+
+<script>
+// Cek apakah ada data login yang disimpan
+window.addEventListener('DOMContentLoaded', () => {
+  const loginData = localStorage.getItem('panel_login_data');
+  const authToken = localStorage.getItem('panel_auth_token');
+  
+  if (loginData && authToken) {
+    try {
+      const data = JSON.parse(loginData);
+      document.getElementById('username').value = data.username || '';
+      
+      // Auto-fill password jika timestamp masih valid (5 menit)
+      const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
+      if (data.timestamp && data.timestamp > fiveMinutesAgo) {
+        document.getElementById('password').value = data.password || '';
+      }
+    } catch (e) {
+      console.error('Error parsing login data:', e);
+    }
+  }
+});
+
+// Proses login
+function processLogin() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const messageEl = document.getElementById('message');
+  
+  // Reset message
+  messageEl.className = 'message';
+  messageEl.textContent = '';
+  
+  // Validasi
+  if (!username || !password) {
+    messageEl.textContent = 'Username dan password harus diisi!';
+    messageEl.classList.add('error');
+    return;
+  }
+  
+  // Simulasi proses login
+  messageEl.textContent = 'Memproses login...';
+  messageEl.classList.add('success');
+  
+  // Delay untuk simulasi
+  setTimeout(() => {
+    // Simulasi login berhasil
+    localStorage.setItem('login', 'true');
+    
+    // Arahkan ke panel asli (dengan proxy atau langsung)
+    // Untuk keamanan, URL panel asli disembunyikan
+    redirectToRealPanel();
+  }, 1500);
+}
+
+// Redirect ke panel asli (dengan metode aman)
+function redirectToRealPanel() {
+  // Metode 1: Menggunakan iframe atau proxy
+  const messageEl = document.getElementById('message');
+  messageEl.textContent = 'Mengarahkan ke panel...';
+  
+  // Simulasi redirect setelah delay
+  setTimeout(() => {
+    // Tampilkan pesan untuk membuka panel di tab baru
+    messageEl.innerHTML = `
+      <div style="text-align: center;">
+        <p><i class="fas fa-check-circle" style="color: #10b981; font-size: 24px; margin-bottom: 10px;"></i></p>
+        <p>Login berhasil! Panel akan dibuka di tab baru.</p>
+        <p style="font-size: 12px; margin-top: 10px;">Jika tidak terbuka otomatis, <a href="javascript:openPanel()" style="color: #6366f1; text-decoration: underline;">klik di sini</a></p>
+      </div>
+    `;
+    messageEl.classList.add('success');
+    
+    // Buka panel di tab baru setelah 2 detik
+    setTimeout(openPanel, 2000);
+  }, 1000);
+}
+
+// Fungsi untuk membuka panel (dengan URL yang disembunyikan)
+function openPanel() {
+  // URL panel asli disembunyikan untuk keamanan
+  // Dalam implementasi nyata, ini bisa menggunakan proxy
+  const panelUrl = 'https://privhost.sapuracloud.web.id/';
+  
+  // Buka di tab baru
+  const newWindow = window.open(panelUrl, '_blank');
+  
+  // Focus ke window baru
+  if (newWindow) {
+    newWindow.focus();
+  }
+}
+
+// Enter key untuk login
+document.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    processLogin();
+  }
+});
+</script>
+</body>
+</html>
